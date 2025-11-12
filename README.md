@@ -1,0 +1,2 @@
+# Cloud-Based-Task-Management-System-Using-Firebase-Authentication-and-Firestore-Database
+Cirrus Tasks is a responsive, serverless task management web application that helps users organize their daily activities efficiently. The app allows secure Google authentication, real-time synchronization of tasks using Firebase Firestore, and persistent cloud storage — ensuring that your tasks are always accessible from anywhere.
