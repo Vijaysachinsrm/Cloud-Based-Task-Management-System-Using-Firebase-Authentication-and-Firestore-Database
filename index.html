@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Cirrus Tasks — Cloud To-Do</title>
+  <meta name="description" content="A fast, offline-first to-do list with Google sign-in and Firestore sync." />
+  <link rel="icon" href="assets/logo.svg" type="image/svg+xml" />
+  <link rel="manifest" href="/manifest.webmanifest" />
+  <meta name="theme-color" content="#0b1220" />
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <header class="nav container">
+    <a class="brand" href="/">
+      <img src="assets/logo.svg" alt="Cirrus Tasks logo" />
+      <span>Cirrus Tasks</span>
+    </a>
+    <nav class="links">
+      <button id="btnExport" class="btn">Export CSV</button>
+      <button id="btnSignin" class="btn">Continue with Google</button>
+      <button id="btnSignout" class="btn" style="display:none">Logout</button>
+    </nav>
+  </header>
+
+  <main class="container">
+    <!-- Input row -->
+    <section class="card">
+      <form id="newTaskForm" class="row">
+        <input id="taskText" class="input" placeholder="What needs to be done?" required />
+        <select id="priority" class="input" title="Priority">
+          <option value="normal">Normal</option>
+          <option value="high">High 🔥</option>
+          <option value="low">Low</option>
+        </select>
+        <input id="due" class="input" type="date" />
+        <input id="tags" class="input" placeholder="tags (comma separated)" />
+        <button class="btn primary">Add</button>
+      </form>
+
+      <!-- Filter/search -->
+      <div class="row" style="margin-top:8px">
+        <div class="seg">
+          <button class="seg-btn active" data-filter="all">All</button>
+          <button class="seg-btn" data-filter="active">Active</button>
+          <button class="seg-btn" data-filter="completed">Completed</button>
+        </div>
+        <input id="search" class="input" placeholder="Search…" />
+        <select id="tagFilter" class="input"><option value="">All tags</option></select>
+        <span class="muted right" id="userEmail"></span>
+      </div>
+    </section>
+
+    <!-- List -->
+    <section id="list" class="list"></section>
+
+    <!-- Empty state -->
+    <section id="empty" class="card muted" style="display:none">
+      Nothing here yet. Add your first task above.
+    </section>
+
+    <!-- Footer actions -->
+    <section class="row" style="justify-content:space-between;margin-top:10px">
+      <div class="row">
+        <button id="btnCompleteAll" class="btn">Mark all complete</button>
+        <button id="btnClearCompleted" class="btn">Clear completed</button>
+      </div>
+      <div class="muted" id="stats"></div>
+    </section>
+  </main>
+
+  <footer class="footer container">
+    <p>© <span id="year"></span> Cirrus Tasks • Offline-first • Firestore sync</p>
+  </footer>
+
+  <!-- Firebase (compat CDN for simplest setup) -->
+  <script src="https://www.gstatic.com/firebasejs/11.0.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/11.0.1/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore-compat.js"></script>
+
+  <script>
+    // 🔗 YOUR LIVE CONFIG
+    const firebaseConfig = {
+      apiKey: "AIzaSyBoGBWVK6RPDFQDfwbNP-WCNMhooNYMCa4",
+      authDomain: "firehill-72b21.firebaseapp.com",
+      projectId: "firehill-72b21",
+      storageBucket: "firehill-72b21.firebasestorage.app",
+      messagingSenderId: "194575832439",
+      appId: "1:194575832439:web:f872b68f8543b5cb3cbd72"
+    };
+    firebase.initializeApp(firebaseConfig);
+
+    // Optional: offline cache (ignore error in multi-tab)
+    try { firebase.firestore().enablePersistence().catch(()=>{}); } catch(_) {}
+  </script>
+
+  <!-- App logic (must load AFTER Firebase init) -->
+  <script src="/app.js" defer></script>
+</body>
+</html>
